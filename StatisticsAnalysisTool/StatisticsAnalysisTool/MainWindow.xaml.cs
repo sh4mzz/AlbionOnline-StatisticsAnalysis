@@ -117,11 +117,15 @@ namespace StatisticsAnalysisTool
             if (string.IsNullOrEmpty(searchText))
                 return;
 
-            Dispatcher.InvokeAsync(async () =>
+            Dispatcher.InvokeAsync(() =>
             {
-                var items = await StatisticsAnalysisManager.FindItemsAsync(searchText);
+                var items = StatisticsAnalysisManager.Items?.Where(
+                    s => (s.LocalizedName().ToLower().Contains(searchText.ToLower()))
+                );
+                //var items = await StatisticsAnalysisManager.FindItemsAsync(searchText);
+                var itemsSourceList = items.ToList();
                 LvItems.ItemsSource = items;
-                LblItemCounter.Content = $"{items.Count}/{StatisticsAnalysisManager.Items.Count}";
+                LblItemCounter.Content = $"{itemsSourceList?.Count}/{StatisticsAnalysisManager.Items?.Count}";
             });
         }
         

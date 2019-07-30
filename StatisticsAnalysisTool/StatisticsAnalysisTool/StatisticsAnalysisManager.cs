@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace StatisticsAnalysisTool
             {GameLanguage.France, "FR-FR" },
             {GameLanguage.Spain, "ES-ES" }
         };
-        public static List<Item> Items;
+        public static ObservableCollection<Item> Items;
         public static int RefreshRate = Settings.Default.RefreshRate;
         public static int UpdateItemListByDays = Settings.Default.UpdateItemListByDays;
         
@@ -80,7 +81,7 @@ namespace StatisticsAnalysisTool
                         
                         try
                         {
-                            Items = JsonConvert.DeserializeObject<List<Item>>(itemString);
+                            Items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(itemString);
                         }
                         catch (Exception ex)
                         {
@@ -96,7 +97,7 @@ namespace StatisticsAnalysisTool
 
                 try
                 {
-                    Items = JsonConvert.DeserializeObject<List<Item>>(localItemString);
+                    Items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(localItemString);
                 }
                 catch (Exception ex)
                 {
@@ -112,7 +113,7 @@ namespace StatisticsAnalysisTool
             {
                 var itemsString = await wc.DownloadStringTaskAsync(ItemsJsonUrl);
                 File.WriteAllText($"{AppDomain.CurrentDomain.BaseDirectory}{Settings.Default.ItemListFileName}", itemsString, Encoding.UTF8);
-                Items = JsonConvert.DeserializeObject<List<Item>>(itemsString);
+                Items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(itemsString);
                 return true;
             }
         }
@@ -163,13 +164,13 @@ namespace StatisticsAnalysisTool
             }
         }
 
-        public static async Task<List<Item>> FindItemsAsync(string searchText)
+        public static async Task<ObservableCollection<Item>> FindItemsAsync(string searchText)
         {
-            return await Task.Run(() =>
+            return (ObservableCollection<Item>) await Task.Run(() =>
             {
                 try
                 {
-                    return Items?.FindAll(s => (s.LocalizedName().ToLower().Contains(searchText.ToLower())));
+                    return Items?.Where(s => (s.LocalizedName().ToLower().Contains(searchText.ToLower())));
                 }
                 catch (Exception ex)
                 {
@@ -220,8 +221,7 @@ namespace StatisticsAnalysisTool
             {
                 var apiString = 
                     $"https://www.albion-online-data.com/api/v1/stats/charts/" +
-                    $"{uniqueName}?date={DateTime.Now:MM-dd-yyyy}?locations={Locations.GetName(location)}";
-
+                    $"{uniqueName}?date={DateTime.Now:MM-dd-yyyy}&locations={Locations.GetName(location)}";
                 try
                 {
                     var itemString = await wc.DownloadStringTaskAsync(apiString);
