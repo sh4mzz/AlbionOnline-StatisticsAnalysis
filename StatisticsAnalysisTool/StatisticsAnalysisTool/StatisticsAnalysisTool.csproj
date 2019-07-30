@@ -93,7 +93,6 @@
     </ApplicationDefinition>
     <Compile Include="Models\ComboBoxCity.cs" />
     <Compile Include="Models\ComboboxMarketMode.cs" />
-    <Compile Include="Models\ItemWithMarketInformation.cs" />
     <Compile Include="Models\MarketOrder.cs" />
     <Compile Include="Models\MarketStats.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

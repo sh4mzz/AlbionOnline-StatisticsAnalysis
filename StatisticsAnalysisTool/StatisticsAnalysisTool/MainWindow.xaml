@@ -55,13 +55,13 @@
                         <GridViewColumn Header="Summe" Width="100" DisplayMemberBinding="{Binding Path=Amount, StringFormat='{}{0:c}'}" />
                         <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Type}" />
                         -->
-                        <GridViewColumn x:Name="GvcNmlName" Header="NAME" Width="500" DisplayMemberBinding="{Binding LocalizedNameAndEnglish}" />
-                        <GridViewColumn x:Name="GvcNmlPriceAvgCaerleon" Header="PRICE__AVG__CAERLOEN" Width="80" DisplayMemberBinding="{Binding PriceAvgCaerleon, Mode=OneTime, IsAsync=True}" />
-                        <GridViewColumn x:Name="GvcNmlPriceAvgBridgewatch" Header="PRICE__AVG__BRIDGEWATCH" Width="80" DisplayMemberBinding="{Binding PriceAvgBridgewatch, Mode=OneTime, IsAsync=True}" />
-                        <!--<GridViewColumn x:Name="GvcNmlPriceAvgFortSterling" Header="PRICE__AVG__FORT__STERLING" Width="80" DisplayMemberBinding="{Binding PriceAvgFortSterling, Mode=OneTime, IsAsync=True}" />
-                        <GridViewColumn x:Name="GvcNmlPriceAvgLymhurst" Header="PRICE__AVG__LYMHURST" Width="80" DisplayMemberBinding="{Binding PriceAvgLymhurst, Mode=OneTime, IsAsync=True}" />
-                        <GridViewColumn x:Name="GvcNmlPriceAvgMartlock" Header="PRICE__AVG__MARTLOCK" Width="80" DisplayMemberBinding="{Binding PriceAvgMartlock, Mode=OneTime, IsAsync=True}" />
-                        <GridViewColumn x:Name="GvcNmlPriceAvgThetford" Header="PRICE__AVG__THETFORT" Width="80" DisplayMemberBinding="{Binding PriceAvgThetford, Mode=OneTime, IsAsync=True}" />-->
+                        <GridViewColumn x:Name="GvcNmlName" Header="NAME" Width="400" DisplayMemberBinding="{Binding LocalizedNameAndEnglish}" />
+                        <GridViewColumn x:Name="GvcNmlPriceAvgCaerleon" Header="PRICE__AVG__CAERLOEN" Width="90" DisplayMemberBinding="{Binding PriceAvgCaerleon, Mode=OneTime, IsAsync=True}" />
+                        <GridViewColumn x:Name="GvcNmlPriceAvgBridgewatch" Header="PRICE__AVG__BRIDGEWATCH" Width="90" DisplayMemberBinding="{Binding PriceAvgBridgewatch, Mode=OneTime, IsAsync=True}" />
+                        <GridViewColumn x:Name="GvcNmlPriceAvgFortSterling" Header="PRICE__AVG__FORT__STERLING" Width="90" DisplayMemberBinding="{Binding PriceAvgFortSterling, Mode=OneTime, IsAsync=True}" />
+                        <GridViewColumn x:Name="GvcNmlPriceAvgLymhurst" Header="PRICE__AVG__LYMHURST" Width="90" DisplayMemberBinding="{Binding PriceAvgLymhurst, Mode=OneTime, IsAsync=True}" />
+                        <GridViewColumn x:Name="GvcNmlPriceAvgMartlock" Header="PRICE__AVG__MARTLOCK" Width="90" DisplayMemberBinding="{Binding PriceAvgMartlock, Mode=OneTime, IsAsync=True}" />
+                        <GridViewColumn x:Name="GvcNmlPriceAvgThetford" Header="PRICE__AVG__THETFORT" Width="90" DisplayMemberBinding="{Binding PriceAvgThetford, Mode=OneTime, IsAsync=True}" />
                     </GridView>
                 </ListView.View>
             </ListView>

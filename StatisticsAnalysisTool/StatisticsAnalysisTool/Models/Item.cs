@@ -84,11 +84,11 @@ namespace StatisticsAnalysisTool.Models
             public string PtBr { get; set; }
         }
 
-        public string PriceAvgCaerleon => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Caerleon).Result.ToString("N", LanguageController.DefaultCultureInfo);
-        public string PriceAvgBridgewatch => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Bridgewatch).Result.ToString("N", LanguageController.DefaultCultureInfo);
-        public string PriceAvgFortSterling => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.FortSterling).Result.ToString("N", LanguageController.DefaultCultureInfo);
-        public string PriceAvgLymhurst => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Lymhurst).Result.ToString("N", LanguageController.DefaultCultureInfo);
-        public string PriceAvgMartlock => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Martlock).Result.ToString("N", LanguageController.DefaultCultureInfo);
-        public string PriceAvgThetford => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Thetford).Result.ToString("N", LanguageController.DefaultCultureInfo);
+        public string PriceAvgCaerleon => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Caerleon).Result;
+        public string PriceAvgBridgewatch => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Bridgewatch).Result;
+        public string PriceAvgFortSterling => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.FortSterling).Result;
+        public string PriceAvgLymhurst => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Lymhurst).Result;
+        public string PriceAvgMartlock => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Martlock).Result;
+        public string PriceAvgThetford => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Thetford).Result;
     }
 }

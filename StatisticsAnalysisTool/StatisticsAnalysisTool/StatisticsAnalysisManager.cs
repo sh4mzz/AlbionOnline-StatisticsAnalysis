@@ -11,6 +11,7 @@ using StatisticsAnalysisTool.Models;
 using StatisticsAnalysisTool.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using StatisticsAnalysisTool.Utilities;
 
 namespace StatisticsAnalysisTool
 {
@@ -164,13 +165,15 @@ namespace StatisticsAnalysisTool
             }
         }
 
-        public static async Task<ObservableCollection<Item>> FindItemsAsync(string searchText)
+        public static async Task<List<Item>> FindItemsAsync(string searchText)
         {
-            return (ObservableCollection<Item>) await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 try
                 {
-                    return Items?.Where(s => (s.LocalizedName().ToLower().Contains(searchText.ToLower())));
+                    var obsCollection = Items?.Where(s => (s.LocalizedName().ToLower().Contains(searchText.ToLower())));
+                    return new List<Item>(obsCollection ?? throw new InvalidOperationException());
+
                 }
                 catch (Exception ex)
                 {
@@ -215,29 +218,90 @@ namespace StatisticsAnalysisTool
 
         public static ItemQuality GetQuality(int value) => ItemQualities.FirstOrDefault(x => x.Value == value).Key;
 
-        public static async Task<decimal> GetMarketStatAvgPriceAsync(string uniqueName, Location location)
-        {
-            using (var wc = new WebClient())
-            {
-                var apiString = 
-                    $"https://www.albion-online-data.com/api/v1/stats/charts/" +
-                    $"{uniqueName}?date={DateTime.Now:MM-dd-yyyy}&locations={Locations.GetName(location)}";
-                try
-                {
-                    var itemString = await wc.DownloadStringTaskAsync(apiString);
-                    var values = JsonConvert.DeserializeObject<List<MarketStatChartResponse>>(itemString);
+        public static ObservableCollection<MarketStatChartItem> MarketStatChartItemList = new ObservableCollection<MarketStatChartItem>();
 
-                    return values.FirstOrDefault()?.Data.PricesAvg.FirstOrDefault() ?? 0;
-                }
-                catch (Exception ex)
+        public static async Task<string> GetMarketStatAvgPriceAsync(string uniqueName, Location location)
+        {
+            try
+            {
+                using (var wc = new WebClient())
                 {
-                    Debug.Print(ex.Message);
-                    return 0;
+                    var apiString = "https://www.albion-online-data.com/api/v1/stats/charts/" +
+                                    $"{FormattingUniqueNameForApi(uniqueName)}?date={DateTime.Now:MM-dd-yyyy}";
+
+                    var itemCheck = MarketStatChartItemList?.FirstOrDefault(i => i.UniqueName == uniqueName);
+
+                    if (itemCheck == null)
+                    {
+                        var itemString = await wc.DownloadStringTaskAsync(apiString);
+                        var values = JsonConvert.DeserializeObject<List<MarketStatChartResponse>>(itemString);
+
+                        var newItem = new MarketStatChartItem()
+                        {
+                            UniqueName = uniqueName,
+                            MarketStatChartResponse = values,
+                            LastUpdate = DateTime.Now
+                        };
+
+                        MarketStatChartItemList?.Add(newItem);
+
+                        var data = newItem.MarketStatChartResponse
+                            .FirstOrDefault(itm => itm.Location == Locations.GetName(location))?.Data;
+                        var findIndex = data?.TimeStamps?.FindIndex(t => t == data.TimeStamps.Max());
+
+                        if (findIndex != null)
+                            return data.PricesAvg[(int) findIndex].ToString("N", LanguageController.DefaultCultureInfo);
+                        return "-";
+                    }
+
+                    if (itemCheck.LastUpdate <= DateTime.Now.AddHours(-1))
+                    {
+                        var itemString = await wc.DownloadStringTaskAsync(apiString);
+                        var values = JsonConvert.DeserializeObject<List<MarketStatChartResponse>>(itemString);
+
+                        itemCheck.LastUpdate = DateTime.Now;
+                        itemCheck.MarketStatChartResponse = values;
+                    }
+
+                    var itemCheckData = itemCheck.MarketStatChartResponse
+                        .FirstOrDefault(itm => itm.Location == Locations.GetName(location))?.Data;
+                    var itemCheckFindIndex =
+                        itemCheckData?.TimeStamps?.FindIndex(t => t == itemCheckData.TimeStamps.Max());
+
+                    if (itemCheckFindIndex != null)
+                        return itemCheckData.PricesAvg[(int) itemCheckFindIndex]
+                            .ToString("N", LanguageController.DefaultCultureInfo);
+                    return "-";
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.StackTrace);
+                Debug.Print(ex.Message);
+                return "-";
             }
         }
 
         #region Support methods
+
+        /// <summary>
+        /// Formatting uniqueName for /api/v1/stats/Charts/{itemId}
+        /// </summary>
+        /// <param name="uniqueName"></param>
+        /// <returns></returns>
+        private static string FormattingUniqueNameForApi(string uniqueName)
+        {
+            if (uniqueName.Contains("@1"))
+                return uniqueName.Replace("@1", "%401");
+            
+            if (uniqueName.Contains("@2"))
+                return uniqueName.Replace("@2", "%402");
+            
+            if (uniqueName.Contains("@3"))
+                return uniqueName.Replace("@3", "%403");
+
+            return uniqueName;
+        }
 
         private static void AddLocalizedName(ref ItemData itemData, GameLanguage gameLanguage, JObject parsedObject)
         {

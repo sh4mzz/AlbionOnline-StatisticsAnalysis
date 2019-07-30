@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace StatisticsAnalysisTool.Models
@@ -23,6 +24,17 @@ namespace StatisticsAnalysisTool.Models
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
-        [JsonProperty(PropertyName = "data")] public MarketStatResponse Data { get; set; }
+        [JsonProperty(PropertyName = "data")]
+        public MarketStatResponse Data { get; set; }
     }
+
+    public class MarketStatChartItem
+    {
+        public string UniqueName { get; set; }
+
+        public List<MarketStatChartResponse> MarketStatChartResponse { get; set; }
+        
+        public DateTime LastUpdate { get; set; }
+    }
+
 }
