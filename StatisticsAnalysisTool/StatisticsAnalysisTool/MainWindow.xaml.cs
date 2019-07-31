@@ -112,17 +112,18 @@ namespace StatisticsAnalysisTool
                 CbMode.SelectedIndex = 0;
         }
 
-        public void LoadLvItems(string searchText)
+        public async Task LoadLvItems(string searchText)
         {
             if (string.IsNullOrEmpty(searchText))
                 return;
 
-            Dispatcher.InvokeAsync(async () =>
-            {
-                var items = await StatisticsAnalysisManager.FindItemsAsync(searchText);
-                LvItems.ItemsSource = items;
-                LblItemCounter.Content = $"{items.Count}/{StatisticsAnalysisManager.Items?.Count}";
-            });
+
+            var items = await StatisticsAnalysisManager.FindItemsAsync(searchText);
+            await Dispatcher.InvokeAsync(() =>
+             {
+                 LvItems.ItemsSource = items;
+                 LblItemCounter.Content = $"{items.Count}/{StatisticsAnalysisManager.Items?.Count}";
+             });
         }
         
         public bool IsModeActive(MarketMode mode)
@@ -140,7 +141,7 @@ namespace StatisticsAnalysisTool
 
         private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            LoadLvItems(TxtSearch.Text);
+            _ = LoadLvItems(TxtSearch.Text);
         }
 
         private void LvItems_MouseDoubleClick(object sender, MouseButtonEventArgs e)

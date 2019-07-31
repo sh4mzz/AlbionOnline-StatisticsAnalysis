@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Linq;
+using System.Text;
 using System.Windows.Media.Imaging;
 using StatisticsAnalysisTool.Utilities;
 using Newtonsoft.Json;
@@ -84,11 +86,27 @@ namespace StatisticsAnalysisTool.Models
             public string PtBr { get; set; }
         }
 
-        public string PriceAvgCaerleon => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Caerleon).Result;
-        public string PriceAvgBridgewatch => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Bridgewatch).Result;
-        public string PriceAvgFortSterling => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.FortSterling).Result;
-        public string PriceAvgLymhurst => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Lymhurst).Result;
-        public string PriceAvgMartlock => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Martlock).Result;
-        public string PriceAvgThetford => StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(UniqueName, Location.Thetford).Result;
+        private MarketStatChartItem _priceAvgItem;
+
+        private string GetAvgPrice(string uniqueName, Location location)
+        {
+            if (_priceAvgItem == null || _priceAvgItem?.LastUpdate <= DateTime.Now.AddHours(-1))
+                _priceAvgItem = StatisticsAnalysisManager.GetMarketStatAvgPriceAsync(uniqueName).Result;
+
+            var data = _priceAvgItem?.MarketStatChartResponse
+                .FirstOrDefault(itm => itm.Location == Locations.GetName(location))?.Data;
+            var findIndex = data?.TimeStamps?.FindIndex(t => t == data.TimeStamps.Max());
+
+            if (findIndex != null)
+                return string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", data.PricesAvg[(int)findIndex]);
+            return "-";
+        }
+
+        public string PriceAvgCaerleon => GetAvgPrice(UniqueName, Location.Caerleon);
+        public string PriceAvgBridgewatch => GetAvgPrice(UniqueName, Location.Bridgewatch);
+        public string PriceAvgFortSterling => GetAvgPrice(UniqueName, Location.FortSterling);
+        public string PriceAvgLymhurst => GetAvgPrice(UniqueName, Location.Lymhurst);
+        public string PriceAvgMartlock => GetAvgPrice(UniqueName, Location.Martlock);
+        public string PriceAvgThetford => GetAvgPrice(UniqueName, Location.Thetford);
     }
 }

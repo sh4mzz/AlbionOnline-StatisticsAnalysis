@@ -218,9 +218,7 @@ namespace StatisticsAnalysisTool
 
         public static ItemQuality GetQuality(int value) => ItemQualities.FirstOrDefault(x => x.Value == value).Key;
 
-        public static ObservableCollection<MarketStatChartItem> MarketStatChartItemList = new ObservableCollection<MarketStatChartItem>();
-
-        public static async Task<string> GetMarketStatAvgPriceAsync(string uniqueName, Location location)
+        public static async Task<MarketStatChartItem> GetMarketStatAvgPriceAsync(string uniqueName)
         {
             try
             {
@@ -229,56 +227,24 @@ namespace StatisticsAnalysisTool
                     var apiString = "https://www.albion-online-data.com/api/v1/stats/charts/" +
                                     $"{FormattingUniqueNameForApi(uniqueName)}?date={DateTime.Now:MM-dd-yyyy}";
 
-                    var itemCheck = MarketStatChartItemList?.FirstOrDefault(i => i.UniqueName == uniqueName);
+                    var itemString = await wc.DownloadStringTaskAsync(apiString);
+                    var values = JsonConvert.DeserializeObject<List<MarketStatChartResponse>>(itemString);
 
-                    if (itemCheck == null)
+                    var newItem = new MarketStatChartItem()
                     {
-                        var itemString = await wc.DownloadStringTaskAsync(apiString);
-                        var values = JsonConvert.DeserializeObject<List<MarketStatChartResponse>>(itemString);
-
-                        var newItem = new MarketStatChartItem()
-                        {
-                            UniqueName = uniqueName,
-                            MarketStatChartResponse = values,
-                            LastUpdate = DateTime.Now
-                        };
-
-                        MarketStatChartItemList?.Add(newItem);
-
-                        var data = newItem.MarketStatChartResponse
-                            .FirstOrDefault(itm => itm.Location == Locations.GetName(location))?.Data;
-                        var findIndex = data?.TimeStamps?.FindIndex(t => t == data.TimeStamps.Max());
-
-                        if (findIndex != null)
-                            return data.PricesAvg[(int) findIndex].ToString("N", LanguageController.DefaultCultureInfo);
-                        return "-";
-                    }
-
-                    if (itemCheck.LastUpdate <= DateTime.Now.AddHours(-1))
-                    {
-                        var itemString = await wc.DownloadStringTaskAsync(apiString);
-                        var values = JsonConvert.DeserializeObject<List<MarketStatChartResponse>>(itemString);
-
-                        itemCheck.LastUpdate = DateTime.Now;
-                        itemCheck.MarketStatChartResponse = values;
-                    }
-
-                    var itemCheckData = itemCheck.MarketStatChartResponse
-                        .FirstOrDefault(itm => itm.Location == Locations.GetName(location))?.Data;
-                    var itemCheckFindIndex =
-                        itemCheckData?.TimeStamps?.FindIndex(t => t == itemCheckData.TimeStamps.Max());
-
-                    if (itemCheckFindIndex != null)
-                        return itemCheckData.PricesAvg[(int) itemCheckFindIndex]
-                            .ToString("N", LanguageController.DefaultCultureInfo);
-                    return "-";
+                        UniqueName = uniqueName,
+                        MarketStatChartResponse = values,
+                        LastUpdate = DateTime.Now
+                    };
+                    
+                    return newItem;
                 }
             }
             catch (Exception ex)
             {
                 Debug.Print(ex.StackTrace);
                 Debug.Print(ex.Message);
-                return "-";
+                return null;
             }
         }
 
