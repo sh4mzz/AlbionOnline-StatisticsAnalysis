@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace StatisticsAnalysisTool
 {
-    public class StatisticsAnalysisManager
+    public static class StatisticsAnalysisManager
     {
         public static LanguageController LanguageController = new LanguageController();
 

@@ -1,9 +1,9 @@
 ﻿namespace StatisticsAnalysisTool.Views
 {
-    using Common;
     using Properties;
     using System.Windows;
     using System.Windows.Input;
+    using LanguageController = Common.LanguageController;
 
     /// <summary>
     /// Interaktionslogik für SettingsWindow.xaml
@@ -18,6 +18,12 @@
         
         private void InitializeSettings()
         {
+            // Language
+            foreach (var langInfos in StatisticsAnalysisManager.LanguageController.FileInfos)
+                CbLanguage.Items.Add(new LanguageController.FileInfo() { FileName = langInfos.FileName });
+
+            CbLanguage.SelectedValue = LanguageController.CurrentLanguage;
+
             // Refresh rate
             CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("5_SECONDS"), Seconds = 5000});
             CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("10_SECONDS"), Seconds = 10000});
@@ -25,13 +31,7 @@
             CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("60_SECONDS"), Seconds = 60000});
             CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("5_MINUTES"), Seconds = 300000});
             CbRefreshRate.SelectedValue = Settings.Default.RefreshRate;
-
-            // Language
-            foreach (var langInfos in StatisticsAnalysisManager.LanguageController.FileInfos)
-                CbLanguage.Items.Add(new LanguageController.FileInfo() { FileName = langInfos.FileName });
-
-            CbLanguage.SelectedValue = LanguageController.CurrentLanguage;
-
+            
             // Update item list by days
             CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_DAY"), Value = 1 });
             CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_3_DAYS"), Value = 3 });

@@ -26,7 +26,6 @@ namespace StatisticsAnalysisTool.ViewModels
         private static List<Item> _filteredItems;
         private static PlayerModeInformationModel _playerModeInformationLocal;
         private static PlayerModeInformationModel _playerModeInformation;
-        private static LanguageController _langController;
 
         public MainWindowViewModel(MainWindow mainWindow)
         {
