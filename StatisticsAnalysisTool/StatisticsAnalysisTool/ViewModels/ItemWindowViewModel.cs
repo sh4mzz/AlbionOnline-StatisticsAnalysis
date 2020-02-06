@@ -13,7 +13,7 @@
         {
             _mainWindow = mainWindow;
         }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

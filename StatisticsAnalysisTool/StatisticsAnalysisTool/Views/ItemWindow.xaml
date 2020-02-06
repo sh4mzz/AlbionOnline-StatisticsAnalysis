@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:common="clr-namespace:StatisticsAnalysisTool.Common"
         mc:Ignorable="d"
         Title="ItemWindow" MinHeight="335" Height="360" MinWidth="900" Width="1180" AllowsTransparency="True" Style="{StaticResource PrimaryWindow}" FontSize="{StaticResource BaseFontSize}" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
+    <Window.Resources>
+        <common:LanguageConverter x:Key="LangCon" />
+    </Window.Resources>
     <Grid>
         <Border BorderThickness="1,0,0,0" BorderBrush="{StaticResource SolidColorBrush.Background.Third}"/>
         <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource SolidColorBrush.Background.Third}"/>
@@ -20,22 +24,22 @@
             <Image x:Name="ImgItemImage" HorizontalAlignment="Left" Height="75" Margin="10,5,0,0" VerticalAlignment="Top" Width="75"/>
             <Label x:Name="LblItemName" Content="ITEM__NAME" Margin="90,5,200,0" VerticalAlignment="Top" Height="33" FontSize="16" Foreground="{StaticResource SolidColorBrush.Foreground.First}"/>
             <Label x:Name="LblItemId" Content="ITEM__ID" Margin="90,43,0,0" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" HorizontalAlignment="Left" Width="375"/>
-            <CheckBox x:Name="ChbShowBlackZoneOutposts" Content="SHOW__BLACKZONE__OUTPOSTS" Margin="470,17,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200" Height="26" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Click="ChbShowBlackZoneOutposts_Click" />
-            <CheckBox x:Name="ChbShowVillages" Content="SHOW__VILLAGES" Margin="470,43,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200" Height="26" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Click="ShowVillagesPrices_Click" />
-            <CheckBox x:Name="ChbAutoUpdateData" Content="Auto Daten Update" IsChecked="True" Margin="700,43,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="150" Height="26" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" />
-            <Label x:Name="LblLastUpdate" Content="LAST__UPDATE" Margin="0,43,10,0" VerticalAlignment="Top" ToolTip="Letzte Aktualisierung" Foreground="{StaticResource SolidColorBrush.Foreground.First}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Width="230"/>
+            <CheckBox x:Name="ChbShowBlackZoneOutposts" Content="{Binding Converter={StaticResource LangCon}, ConverterParameter=SHOW_BLACKZONE_OUTPOSTS}" Margin="470,17,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200" Height="26" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Click="ChbShowBlackZoneOutposts_Click" />
+            <CheckBox x:Name="ChbShowVillages" Content="{Binding Converter={StaticResource LangCon}, ConverterParameter=SHOW_VILLAGES}" Margin="470,43,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200" Height="26" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Click="ShowVillagesPrices_Click" />
+            <CheckBox x:Name="ChbAutoUpdateData" Content="{Binding Converter={StaticResource LangCon}, ConverterParameter=AUTO_DATA_UPDATE}" IsChecked="True" Margin="700,43,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="150" Height="26" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" />
+            <Label x:Name="LblLastUpdate" Content="{Binding Converter={StaticResource LangCon}, ConverterParameter=LAST_UPDATE}" Margin="0,43,10,0" VerticalAlignment="Top" ToolTip="{Binding Converter={StaticResource LangCon}, ConverterParameter=LAST_UPDATE}" Foreground="{StaticResource SolidColorBrush.Foreground.First}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Width="230"/>
         </Grid>
         <ListView x:Name="ListViewPrices" Margin="1,80,1,41" BorderThickness="0" SelectionMode="Single" Foreground="{StaticResource SolidColorBrush.Foreground.First}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="GvcCityTitel" Header="CITY" Width="160">
+                    <GridViewColumn x:Name="GvcCityTitel" Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=CITY}" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Height="28" Width="150" Margin="0" Content="{Binding LocationName}" Style="{Binding LocationStyle}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcSellPriceMin" Header="SELL_PRICE_MIN" Width="120">
+                    <GridViewColumn x:Name="GvcSellPriceMin" Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=SELL_PRICE_MIN}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Price}">

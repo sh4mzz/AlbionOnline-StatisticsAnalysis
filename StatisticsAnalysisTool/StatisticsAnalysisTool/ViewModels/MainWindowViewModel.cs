@@ -48,7 +48,8 @@ namespace StatisticsAnalysisTool.ViewModels
 
         private void InitLanguage()
         {
-            if (LanguageController.SetFirstLanguageIfPossible())
+            var langController = new LanguageConverter();
+            if (langController.SetFirstLanguageIfPossible())
                 return;
 
             MessageBox.Show("ERROR: No language file found!");

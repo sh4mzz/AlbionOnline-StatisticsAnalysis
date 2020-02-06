@@ -43,20 +43,20 @@
         
         private void Translation()
         {
-            ChbShowVillages.Content = LanguageController.Translation("SHOW_VILLAGES");
-            ChbShowBlackZoneOutposts.Content = LanguageController.Translation("SHOW_BLACKZONE_OUTPOSTS");
-            ChbAutoUpdateData.Content = LanguageController.Translation("AUTO_UPDATE_DATA");
-            LblLastUpdate.ToolTip = LanguageController.Translation("LAST_UPDATE");
-            GvcCityTitel.Header = LanguageController.Translation("CITY");
-            GvcSellPriceMin.Header = LanguageController.Translation("SELL_PRICE_MIN");
-            GvcSellPriceMinDate.Header = LanguageController.Translation("SELL_PRICE_MIN_DATE");
-            GvcSellPriceMax.Header = LanguageController.Translation("SELL_PRICE_MAX");
-            GvcSellPriceMaxDate.Header = LanguageController.Translation("SELL_PRICE_MAX_DATE");
-            GvcBuyPriceMin.Header = LanguageController.Translation("BUY_PRICE_MIN");
-            GvcBuyPriceMinDate.Header = LanguageController.Translation("BUY_PRICE_MIN_DATE");
-            GvcBuyPriceMax.Header = LanguageController.Translation("BUY_PRICE_MAX");
-            GvcBuyPriceMaxDate.Header = LanguageController.Translation("BUY_PRICE_MAX_DATE");
-            LblDifCalcName.Content = $"{LanguageController.Translation("DIFFERENT_CALCULATION")}:";
+            //ChbShowVillages.Content = LanguageController.Translation("SHOW_VILLAGES");
+            //ChbShowBlackZoneOutposts.Content = LanguageController.Translation("SHOW_BLACKZONE_OUTPOSTS");
+            //ChbAutoUpdateData.Content = LanguageController.Translation("AUTO_UPDATE_DATA");
+            //LblLastUpdate.ToolTip = LanguageController.Translation("LAST_UPDATE");
+            //GvcCityTitel.Header = LanguageController.Translation("CITY");
+            //GvcSellPriceMin.Header = LanguageController.Translation("SELL_PRICE_MIN");
+            //GvcSellPriceMinDate.Header = LanguageController.Translation("SELL_PRICE_MIN_DATE");
+            //GvcSellPriceMax.Header = LanguageController.Translation("SELL_PRICE_MAX");
+            //GvcSellPriceMaxDate.Header = LanguageController.Translation("SELL_PRICE_MAX_DATE");
+            //GvcBuyPriceMin.Header = LanguageController.Translation("BUY_PRICE_MIN");
+            //GvcBuyPriceMinDate.Header = LanguageController.Translation("BUY_PRICE_MIN_DATE");
+            //GvcBuyPriceMax.Header = LanguageController.Translation("BUY_PRICE_MAX");
+            //GvcBuyPriceMaxDate.Header = LanguageController.Translation("BUY_PRICE_MAX_DATE");
+            //LblDifCalcName.Content = $"{LanguageController.Translation("DIFFERENT_CALCULATION")}:";
         }
 
         private async void InitializeItemData(Item item)
