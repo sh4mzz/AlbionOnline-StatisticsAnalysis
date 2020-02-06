@@ -13,42 +13,31 @@
         public SettingsWindow()
         {
             InitializeComponent();
-            InitializeTranslation();
             InitializeSettings();
         }
         
-        private void InitializeTranslation()
-        {
-            LblSettingsWindowTitle.Content = LanguageController.Translation("SETTINGS");
-            LblLanguage.Content = $"{LanguageController.Translation("LANGUAGE")}:";
-            LblRefrashRate.Content = $"{LanguageController.Translation("REFRESH_RATE")}:";
-            LblUpdateItemListByDays.Content = $"{LanguageController.Translation("UPDATE_ITEM_LIST_BY_DAYS")}";
-            LblItemListSourceUrl.Content = $"{LanguageController.Translation("ITEM_LIST_SOURCE_URL")}";
-            BtnSave.Content = $"{LanguageController.Translation("SAVE")}";
-        }
-
         private void InitializeSettings()
         {
             // Refresh rate
-            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = LanguageController.Translation("5_SECONDS"), Seconds = 5000});
-            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = LanguageController.Translation("10_SECONDS"), Seconds = 10000});
-            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = LanguageController.Translation("30_SECONDS"), Seconds = 30000});
-            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = LanguageController.Translation("60_SECONDS"), Seconds = 60000});
-            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = LanguageController.Translation("5_MINUTES"), Seconds = 300000});
+            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("5_SECONDS"), Seconds = 5000});
+            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("10_SECONDS"), Seconds = 10000});
+            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("30_SECONDS"), Seconds = 30000});
+            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("60_SECONDS"), Seconds = 60000});
+            CbRefreshRate.Items.Add(new RefreshRateStruct() {Name = StatisticsAnalysisManager.LanguageController.Translation("5_MINUTES"), Seconds = 300000});
             CbRefreshRate.SelectedValue = Settings.Default.RefreshRate;
 
             // Language
-            foreach (var langInfos in LanguageController.FileInfos)
+            foreach (var langInfos in StatisticsAnalysisManager.LanguageController.FileInfos)
                 CbLanguage.Items.Add(new LanguageController.FileInfo() { FileName = langInfos.FileName });
 
             CbLanguage.SelectedValue = LanguageController.CurrentLanguage;
 
             // Update item list by days
-            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = LanguageController.Translation("EVERY_DAY"), Value = 1 });
-            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = LanguageController.Translation("EVERY_3_DAYS"), Value = 3 });
-            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = LanguageController.Translation("EVERY_7_DAYS"), Value = 7 });
-            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = LanguageController.Translation("EVERY_14_DAYS"), Value = 14 });
-            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = LanguageController.Translation("EVERY_28_DAYS"), Value = 28 });
+            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_DAY"), Value = 1 });
+            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_3_DAYS"), Value = 3 });
+            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_7_DAYS"), Value = 7 });
+            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_14_DAYS"), Value = 14 });
+            CbUpdateItemListByDays.Items.Add(new UpdateItemListStruct() { Name = StatisticsAnalysisManager.LanguageController.Translation("EVERY_28_DAYS"), Value = 28 });
             CbUpdateItemListByDays.SelectedValue = Settings.Default.UpdateItemListByDays;
 
             // ItemList source url
@@ -77,7 +66,7 @@
 
             if (CbLanguage.SelectedItem is LanguageController.FileInfo langItem)
             {
-                LanguageController.SetLanguage(langItem.FileName);
+                StatisticsAnalysisManager.LanguageController.SetLanguage(langItem.FileName);
                 Settings.Default.CurrentLanguageCulture = langItem.FileName;
             }
             

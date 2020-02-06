@@ -43,20 +43,20 @@
         
         private void Translation()
         {
-            //ChbShowVillages.Content = LanguageController.Translation("SHOW_VILLAGES");
-            //ChbShowBlackZoneOutposts.Content = LanguageController.Translation("SHOW_BLACKZONE_OUTPOSTS");
-            //ChbAutoUpdateData.Content = LanguageController.Translation("AUTO_UPDATE_DATA");
-            //LblLastUpdate.ToolTip = LanguageController.Translation("LAST_UPDATE");
-            //GvcCityTitel.Header = LanguageController.Translation("CITY");
-            //GvcSellPriceMin.Header = LanguageController.Translation("SELL_PRICE_MIN");
-            //GvcSellPriceMinDate.Header = LanguageController.Translation("SELL_PRICE_MIN_DATE");
-            //GvcSellPriceMax.Header = LanguageController.Translation("SELL_PRICE_MAX");
-            //GvcSellPriceMaxDate.Header = LanguageController.Translation("SELL_PRICE_MAX_DATE");
-            //GvcBuyPriceMin.Header = LanguageController.Translation("BUY_PRICE_MIN");
-            //GvcBuyPriceMinDate.Header = LanguageController.Translation("BUY_PRICE_MIN_DATE");
-            //GvcBuyPriceMax.Header = LanguageController.Translation("BUY_PRICE_MAX");
-            //GvcBuyPriceMaxDate.Header = LanguageController.Translation("BUY_PRICE_MAX_DATE");
-            //LblDifCalcName.Content = $"{LanguageController.Translation("DIFFERENT_CALCULATION")}:";
+            ChbShowVillages.Content = StatisticsAnalysisManager.LanguageController.Translation("SHOW_VILLAGES");
+            ChbShowBlackZoneOutposts.Content = StatisticsAnalysisManager.LanguageController.Translation("SHOW_BLACKZONE_OUTPOSTS");
+            ChbAutoUpdateData.Content = StatisticsAnalysisManager.LanguageController.Translation("AUTO_UPDATE_DATA");
+            LblLastUpdate.ToolTip = StatisticsAnalysisManager.LanguageController.Translation("LAST_UPDATE");
+            GvcCityTitel.Header = StatisticsAnalysisManager.LanguageController.Translation("CITY");
+            GvcSellPriceMin.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MIN");
+            GvcSellPriceMinDate.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MIN_DATE");
+            GvcSellPriceMax.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MAX");
+            GvcSellPriceMaxDate.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MAX_DATE");
+            GvcBuyPriceMin.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MIN");
+            GvcBuyPriceMinDate.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MIN_DATE");
+            GvcBuyPriceMax.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MAX");
+            GvcBuyPriceMaxDate.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MAX_DATE");
+            LblDifCalcName.Content = $"{StatisticsAnalysisManager.LanguageController.Translation("DIFFERENT_CALCULATION")}:";
         }
 
         private async void InitializeItemData(Item item)
@@ -81,7 +81,7 @@
 
             if (itemDataTaskResult == null)
             {
-                LblItemName.Content = LanguageController.Translation("ERROR_PRICES_CAN_NOT_BE_LOADED");
+                LblItemName.Content = StatisticsAnalysisManager.LanguageController.Translation("ERROR_PRICES_CAN_NOT_BE_LOADED");
                 Dispatcher?.Invoke(() => { FaLoadIcon.Visibility = Visibility.Hidden; });
                 return;
             }
@@ -262,9 +262,9 @@
 
             var diffPrice = (int)bestBuyMaxPrice - (int)bestSellMinPrice;
 
-            LblDifCalcText.Content = $"{LanguageController.Translation("BOUGHT_FOR")} {string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", bestSellMinPrice)} | " +
-                                     $"{LanguageController.Translation("SELL_FOR")} {string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", bestBuyMaxPrice)} | " +
-                                     $"{LanguageController.Translation("PROFIT")} {string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", diffPrice)}";
+            LblDifCalcText.Content = $"{StatisticsAnalysisManager.LanguageController.Translation("BOUGHT_FOR")} {string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", bestSellMinPrice)} | " +
+                                     $"{StatisticsAnalysisManager.LanguageController.Translation("SELL_FOR")} {string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", bestBuyMaxPrice)} | " +
+                                     $"{StatisticsAnalysisManager.LanguageController.Translation("PROFIT")} {string.Format(LanguageController.DefaultCultureInfo, "{0:n0}", diffPrice)}";
         }
         
         private void Hotbar_MouseDown(object sender, MouseButtonEventArgs e)

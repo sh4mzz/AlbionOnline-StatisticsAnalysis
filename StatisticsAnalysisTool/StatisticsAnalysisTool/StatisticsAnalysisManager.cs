@@ -8,6 +8,8 @@ namespace StatisticsAnalysisTool
 {
     public class StatisticsAnalysisManager
     {
+        public static LanguageController LanguageController = new LanguageController();
+
         public static FrequentlyValues.ItemTier GetItemTier(string uniqueName) => FrequentlyValues.ItemTiers.FirstOrDefault(x => x.Value == uniqueName.Split('_')[0]).Key;
 
         public static FrequentlyValues.ItemLevel GetItemLevel(string uniqueName)

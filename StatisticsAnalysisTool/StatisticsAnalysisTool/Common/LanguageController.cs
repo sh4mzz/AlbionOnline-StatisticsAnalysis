@@ -1,24 +1,42 @@
-﻿using StatisticsAnalysisTool.Properties;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Xml;
-
-namespace StatisticsAnalysisTool.Common
+﻿namespace StatisticsAnalysisTool.Common
 {
-    public class LanguageController
+    using Properties;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Xml;
+
+    public class LanguageController : IValueConverter
     {
         public static string CurrentLanguage;
         public static CultureInfo DefaultCultureInfo = (CurrentLanguage != null) ? new CultureInfo(CurrentLanguage) : new CultureInfo("en-US");
-        public static readonly List<FileInfo> FileInfos = new List<FileInfo>();
-        
-        private static Dictionary<string, string> _translations;
-        
-        public static string Translation(string key)
+        public readonly List<FileInfo> FileInfos = new List<FileInfo>();
+
+        public bool IsTranslationPossible;
+
+        private Dictionary<string, string> _translations;
+
+        public LanguageController()
+        {
+            if(SetFirstLanguageIfPossible())
+            {
+                IsTranslationPossible = true;
+            }
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => Translation((string)parameter);
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Translation(string key)
         {
             try
             {
@@ -32,7 +50,23 @@ namespace StatisticsAnalysisTool.Common
             return key;
         }
 
-        public static bool SetLanguage(string lang)
+        public bool SetFirstLanguageIfPossible()
+        {
+            InitializeLanguageFiles();
+
+            if (SetLanguage(CultureInfo.CurrentCulture.Name))
+                return true;
+
+            if (SetLanguage(Settings.Default.CurrentLanguageCulture))
+                return true;
+
+            if (SetLanguage(FileInfos.FirstOrDefault()?.FileName))
+                return true;
+
+            return false;
+        }
+
+        public bool SetLanguage(string lang)
         {
             var fileInfo = (from fi in FileInfos where fi.FileName == lang select new FileInfo(fi.FileName, fi.FilePath)).FirstOrDefault();
 
@@ -44,7 +78,7 @@ namespace StatisticsAnalysisTool.Common
             return true;
         }
 
-        private static void ReadAndAddLanguageFile(string filePath)
+        private void ReadAndAddLanguageFile(string filePath)
         {
             _translations = null;
             _translations = new Dictionary<string, string>();
@@ -58,22 +92,22 @@ namespace StatisticsAnalysisTool.Common
             }
         }
 
-        private static void AddTranslationsToDictionary(XmlReader xmlReader)
+        private void AddTranslationsToDictionary(XmlReader xmlReader)
         {
             while (xmlReader.MoveToNextAttribute())
             {
                 if (_translations.ContainsKey(xmlReader.Value))
                 {
                     MessageBox.Show($"{Translation("DOUBLE_VALUE_EXISTS_IN_THE_LANGUAGE_FILE")}: {xmlReader.Value}");
-                } 
+                }
                 else if (xmlReader.Name == "name")
                 {
                     _translations.Add(xmlReader.Value, xmlReader.ReadString());
                 }
             }
         }
-        
-        public static void InitializeLanguageFiles()
+
+        public void InitializeLanguageFiles()
         {
             var languageFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.Default.LanguageDirectoryName);
 
@@ -92,22 +126,6 @@ namespace StatisticsAnalysisTool.Common
             }
         }
 
-        public static bool SetFirstLanguageIfPossible()
-        {
-            InitializeLanguageFiles();
-
-            if (SetLanguage(CultureInfo.CurrentCulture.Name))
-                return true;
-
-            if (SetLanguage(Settings.Default.CurrentLanguageCulture))
-                return true;
-
-            if (SetLanguage(FileInfos.FirstOrDefault()?.FileName))
-                return true;
-
-            return false;
-        }
-
         public class FileInfo
         {
             public string FileName { get; set; }
@@ -123,6 +141,5 @@ namespace StatisticsAnalysisTool.Common
                 FilePath = filePath;
             }
         }
-
     }
 }

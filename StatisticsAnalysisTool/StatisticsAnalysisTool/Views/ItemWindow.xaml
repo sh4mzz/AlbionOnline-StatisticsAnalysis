@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="ItemWindow" MinHeight="335" Height="360" MinWidth="900" Width="1180" AllowsTransparency="True" Style="{StaticResource PrimaryWindow}" FontSize="{StaticResource BaseFontSize}" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
-        <common:LanguageConverter x:Key="LangCon" />
+        <common:LanguageController x:Key="LangCon" />
     </Window.Resources>
     <Grid>
         <Border BorderThickness="1,0,0,0" BorderBrush="{StaticResource SolidColorBrush.Background.Third}"/>

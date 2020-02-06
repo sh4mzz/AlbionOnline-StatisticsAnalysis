@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="AlbionOnline - StatisticsAnalysisTool" Height="550" Width="1000" WindowStartupLocation="CenterScreen" AllowsTransparency="True" ResizeMode="CanResizeWithGrip" Style="{StaticResource PrimaryWindow}" WindowStyle="None" MinHeight="400" MinWidth="799" Closing="Window_Closing">
     <Window.Resources>
-        <common:LanguageConverter x:Key="LangCon" />
+        <common:LanguageController x:Key="LangCon" />
     </Window.Resources>
     <Grid>
         <Grid ZIndex="-1" Background="{StaticResource SolidColorBrush.Background.Second}" Height="40" VerticalAlignment="Top" MouseDown="Hotbar_MouseDown" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
@@ -30,7 +30,7 @@
                 <fa:ImageAwesome x:Name="FaLoadIcon" Visibility="Hidden" Icon="CircleOutlineNotch" Spin="True" SpinDuration="4" Foreground="{StaticResource SolidColorBrush.Foreground.First}" />
             </Grid>
         </Grid>
-        <Grid x:Name="GridNormalMode" Margin="0,80,0,0" Visibility="Hidden">
+        <Grid x:Name="GridNormalMode" Margin="0,80,0,0" Visibility="Visible">
             <TextBox x:Name="TxtSearch" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" KeyUp="TxtSearch_KeyUp"/>
             <Label x:Name="LblItemCounter" Content="0/0" Height="26" Margin="0,6,10,0" VerticalAlignment="Top" Foreground="{StaticResource SolidColorBrush.Foreground.First}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Width="110" />
 
@@ -45,7 +45,7 @@
             <ListView ItemsSource="{Binding FilteredItems}" Style="{StaticResource {x:Type ListView}}" ItemContainerStyle="{StaticResource {x:Type ListViewItem}}" Margin="10,38,10,40" SelectionMode="Single" MouseDoubleClick="LvItems_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn x:Name="GvcNmlIcon" Header="ICON" Width="80">
+                        <GridViewColumn x:Name="GvcNmlIcon" Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=ICON}" Width="80">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid Background="{StaticResource SolidColorBrush.Background.First}">
@@ -58,7 +58,7 @@
                         <GridViewColumn Header="Summe" Width="100" DisplayMemberBinding="{Binding Path=Amount, StringFormat='{}{0:c}'}" />
                         <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Type}" />
                         -->
-                        <GridViewColumn x:Name="GvcNmlName" Header="NAME" Width="500" DisplayMemberBinding="{Binding LocalizedNameAndEnglish}" />
+                        <GridViewColumn x:Name="GvcNmlName" Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=NAME}" Width="500" DisplayMemberBinding="{Binding LocalizedNameAndEnglish}" />
                         <!--<GridViewColumn x:Name="GvcNmlPriceAvgCaerleon" Header="PRICE__AVG__CAERLOEN" Width="80" DisplayMemberBinding="{Binding PriceAvgCaerleon, Mode=TwoWay, IsAsync=True}" />
                         <GridViewColumn x:Name="GvcNmlPriceAvgBridgewatch" Header="PRICE__AVG__BRIDGEWATCH" Width="80" DisplayMemberBinding="{Binding PriceAvgBridgewatch, Mode=TwoWay, IsAsync=True}" />
                         <GridViewColumn x:Name="GvcNmlPriceAvgFortSterling" Header="PRICE__AVG__FORT__STERLING" Width="80" DisplayMemberBinding="{Binding PriceAvgFortSterling, Mode=TwoWay, IsAsync=True}" />
@@ -75,7 +75,7 @@
                     (<Hyperlink NavigateUri="{Binding Path=DonateUrl}" RequestNavigate="Hyperlink_RequestNavigate"><TextBlock Foreground="{StaticResource SolidColorBrush.Hyperlink.First}" Text="Donate" /></Hyperlink>)</TextBlock>
             </Grid>
         </Grid>
-        <Grid x:Name="GridPlayerMode" Margin="0,80,0,0" Visibility="Visible">
+        <Grid x:Name="GridPlayerMode" Margin="0,80,0,0" Visibility="Hidden">
             <TextBox x:Name="TxtBoxPlayerModeUsername" Text="{Binding Path=SavedPlayerInformationName, ElementName=window}" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" KeyDown="TxtBoxPlayerModeUsername_KeyDown"/>
             <Button x:Name="BtnPlayerModeSave" Content="{Binding Path=LoadTranslation, FallbackValue=LOAD}" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Left" Margin="215,10,0,0" VerticalAlignment="Top" Width="110" Height="25" Click="BtnPlayerModeSave_Click"/>
             <ScrollViewer  Margin="0,40,0,20" HorizontalScrollBarVisibility="Disabled">

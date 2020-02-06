@@ -94,7 +94,7 @@
     <Compile Include="Common\Formatting.cs" />
     <Compile Include="Common\FrequentlyValues.cs" />
     <Compile Include="Common\ApiController.cs" />
-    <Compile Include="Common\LanguageConverter.cs" />
+    <Compile Include="Common\LanguageController.cs" />
     <Compile Include="Models\ComboboxMarketMode.cs" />
     <Compile Include="Models\PlayerModeInformationModel.cs" />
     <Compile Include="Models\PlayerModeTranslation.cs" />
@@ -115,7 +115,6 @@
     </Compile>
     <Compile Include="Common\DirectoryController.cs" />
     <Compile Include="Common\ImageController.cs" />
-    <Compile Include="Common\LanguageController.cs" />
     <Compile Include="Common\Utilities.cs" />
     <Compile Include="Common\WebDownload.cs">
       <SubType>Component</SubType>

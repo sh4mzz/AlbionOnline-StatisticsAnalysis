@@ -26,6 +26,7 @@ namespace StatisticsAnalysisTool.ViewModels
         private static List<Item> _filteredItems;
         private static PlayerModeInformationModel _playerModeInformationLocal;
         private static PlayerModeInformationModel _playerModeInformation;
+        private static LanguageController _langController;
 
         public MainWindowViewModel(MainWindow mainWindow)
         {
@@ -48,8 +49,7 @@ namespace StatisticsAnalysisTool.ViewModels
 
         private void InitLanguage()
         {
-            var langController = new LanguageConverter();
-            if (langController.SetFirstLanguageIfPossible())
+            if (StatisticsAnalysisManager.LanguageController.IsTranslationPossible)
                 return;
 
             MessageBox.Show("ERROR: No language file found!");
@@ -68,8 +68,8 @@ namespace StatisticsAnalysisTool.ViewModels
                     #region Set combobox mode
 
                     _mainWindow.CbMode.Items.Clear();
-                    _mainWindow.CbMode.Items.Add(new ComboboxMarketMode { Name = LanguageController.Translation("NORMAL"), Mode = MainWindow.ViewMode.Normal });
-                    _mainWindow.CbMode.Items.Add(new ComboboxMarketMode { Name = LanguageController.Translation("PLAYER"), Mode = MainWindow.ViewMode.Player });
+                    _mainWindow.CbMode.Items.Add(new ComboboxMarketMode { Name = StatisticsAnalysisManager.LanguageController.Translation("NORMAL"), Mode = MainWindow.ViewMode.Normal });
+                    _mainWindow.CbMode.Items.Add(new ComboboxMarketMode { Name = StatisticsAnalysisManager.LanguageController.Translation("PLAYER"), Mode = MainWindow.ViewMode.Player });
 
                     if (_mainWindow.CbMode.Items.Count > 0)
                         _mainWindow.CbMode.SelectedIndex = 0;
@@ -93,8 +93,8 @@ namespace StatisticsAnalysisTool.ViewModels
                 
                 var isItemListLoaded = await GetItemListFromJsonAsync().ConfigureAwait(true);
                 if (!isItemListLoaded)
-                    MessageBox.Show(LanguageController.Translation("ITEM_LIST_CAN_NOT_BE_LOADED"),
-                        LanguageController.Translation("ERROR"));
+                    MessageBox.Show(StatisticsAnalysisManager.LanguageController.Translation("ITEM_LIST_CAN_NOT_BE_LOADED"),
+                        StatisticsAnalysisManager.LanguageController.Translation("ERROR"));
 
                 _mainWindow.Dispatcher?.Invoke(() =>
                 {
@@ -218,7 +218,7 @@ namespace StatisticsAnalysisTool.ViewModels
                     return false;
 
                 Settings.Default.CurrentItemListSourceUrl = Settings.Default.DefaultItemListSourceUrl;
-                MessageBox.Show(LanguageController.Translation("DEFAULT_ITEMLIST_HAS_BEEN_LOADED"), LanguageController.Translation("NOTE"));
+                MessageBox.Show(StatisticsAnalysisManager.LanguageController.Translation("DEFAULT_ITEMLIST_HAS_BEEN_LOADED"), StatisticsAnalysisManager.LanguageController.Translation("NOTE"));
             }
             return true;
         }
@@ -293,7 +293,7 @@ namespace StatisticsAnalysisTool.ViewModels
         public PlayerModeTranslation PlayerModeTranslation => new PlayerModeTranslation();
         public string DonateUrl => Settings.Default.DonateUrl;
         public string SavedPlayerInformationName => Settings.Default.SavedPlayerInformationName ?? "";
-        public string LoadTranslation => LanguageController.Translation("LOAD");
+        public string LoadTranslation => StatisticsAnalysisManager.LanguageController.Translation("LOAD");
         public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version}";
 
         public event PropertyChangedEventHandler PropertyChanged;
