@@ -35,30 +35,11 @@
             LblItemId.Content = "";
             LblLastUpdate.Content = "";
 
-            Translation();
             InitializeItemData(item);
 
             ListViewPrices.Language = System.Windows.Markup.XmlLanguage.GetLanguage(LanguageController.DefaultCultureInfo.ToString());
         }
         
-        private void Translation()
-        {
-            ChbShowVillages.Content = StatisticsAnalysisManager.LanguageController.Translation("SHOW_VILLAGES");
-            ChbShowBlackZoneOutposts.Content = StatisticsAnalysisManager.LanguageController.Translation("SHOW_BLACKZONE_OUTPOSTS");
-            ChbAutoUpdateData.Content = StatisticsAnalysisManager.LanguageController.Translation("AUTO_UPDATE_DATA");
-            LblLastUpdate.ToolTip = StatisticsAnalysisManager.LanguageController.Translation("LAST_UPDATE");
-            GvcCityTitel.Header = StatisticsAnalysisManager.LanguageController.Translation("CITY");
-            GvcSellPriceMin.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MIN");
-            GvcSellPriceMinDate.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MIN_DATE");
-            GvcSellPriceMax.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MAX");
-            GvcSellPriceMaxDate.Header = StatisticsAnalysisManager.LanguageController.Translation("SELL_PRICE_MAX_DATE");
-            GvcBuyPriceMin.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MIN");
-            GvcBuyPriceMinDate.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MIN_DATE");
-            GvcBuyPriceMax.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MAX");
-            GvcBuyPriceMaxDate.Header = StatisticsAnalysisManager.LanguageController.Translation("BUY_PRICE_MAX_DATE");
-            LblDifCalcName.Content = $"{StatisticsAnalysisManager.LanguageController.Translation("DIFFERENT_CALCULATION")}:";
-        }
-
         private async void InitializeItemData(Item item)
         {
             if (item == null)

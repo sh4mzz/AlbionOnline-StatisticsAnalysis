@@ -32,14 +32,14 @@
         <ListView x:Name="ListViewPrices" Margin="1,80,1,41" BorderThickness="0" SelectionMode="Single" Foreground="{StaticResource SolidColorBrush.Foreground.First}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="GvcCityTitel" Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=CITY}" Width="160">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=CITY}" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Height="28" Width="150" Margin="0" Content="{Binding LocationName}" Style="{Binding LocationStyle}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcSellPriceMin" Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=SELL_PRICE_MIN}" Width="120">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=SELL_PRICE_MIN}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Price}">
@@ -53,7 +53,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcSellPriceMinDate" Header="SELL_PRICE_MIN_DATE" Width="126">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=SELL_PRICE_MIN_DATE}" Width="126">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Date}">
@@ -62,7 +62,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcSellPriceMax" Header="SELL_PRICE_MAX" Width="120">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=SELL_PRICE_MAX}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Price}">
@@ -76,7 +76,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcSellPriceMaxDate" Header="SELL_PRICE_MAX_DATE" Width="126">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=SELL_PRICE_MAX_DATE}" Width="126">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Date}">
@@ -85,7 +85,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcBuyPriceMin" Header="BUY_PRICE_MIN" Width="120">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=BUY_PRICE_MIN}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Price}">
@@ -99,7 +99,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcBuyPriceMinDate" Header="BUY_PRICE_MIN_DATE" Width="126">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=BUY_PRICE_MIN_DATE}" Width="126">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Date}">
@@ -108,7 +108,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcBuyPriceMax" Header="BUY_PRICE_MAX" Width="120">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=BUY_PRICE_MAX}" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Price}">
@@ -122,7 +122,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="GvcBuyPriceMaxDate" Header="BUY_PRICE_MMAX_DATE" Width="126">
+                    <GridViewColumn Header="{Binding Converter={StaticResource LangCon}, ConverterParameter=BUY_PRICE_MAX_DATE}" Width="126">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Style="{StaticResource ListView.Grid.Item.Date}">
@@ -142,7 +142,7 @@
                     <GradientStop Color="{StaticResource Background.Second}" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Label x:Name="LblDifCalcName" Content="Differenz Berechnung:" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Width="130" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Background="{x:Null}"/>
+            <Label Content="{Binding Converter={StaticResource LangCon}, ConverterParameter=DIFFERENT_CALCULATION}" ContentStringFormat='{}{0}:' HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Width="130" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Background="{x:Null}"/>
             <Label x:Name="LblDifCalcText" Content="" Margin="145,0,0,4" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="723"/>
             <TextBlock Margin="873,0,10,4" Foreground="{StaticResource SolidColorBrush.Foreground.First}" Height="21" VerticalAlignment="Bottom">
                 Prices are provided by the
